@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  //primary key gives the user an auto generated unique ID
+  clerkId   String   @unique
+  //id used for clerk auth
+  email     String   @unique
+  //email must be unique
+  createdAt DateTime @default(now())
+  //timestamp
+  meals     Meal[]
+  //one user many meals
+  macroGoal MacroGoal?
+  //macrogoals optional
+}
+
+model Meal {
+  id        String     @id @default(cuid())
+  //Meal's unique id
+  userId    String
+  //User's foreign key
+  user      User       @relation(fields: [userId], references: [id])
+  //Used to navigate relation between user and meal
+  date      DateTime   @default(now())
+  //when meal logged
+  foods     MealFood[]
+}
+
+model Food {
+  id       String     @id @default(cuid())
+  fdcId    String     @unique
+  name     String
+  calories Float
+  protein  Float
+  carbs    Float
+  fat      Float
+  meals    MealFood[]
+}
+
+model MealFood {
+  id       String @id @default(cuid())
+  mealId   String
+  meal     Meal   @relation(fields: [mealId], references: [id])
+  foodId   String
+  food     Food   @relation(fields: [foodId], references: [id])
+  quantity Float
+}
+
+model MacroGoal {
+  id      String @id @default(cuid())
+  userId  String @unique
+  user    User   @relation(fields: [userId], references: [id])
+  protein Float
+  carbs   Float
+  fat     Float
+  calories Float
+}
