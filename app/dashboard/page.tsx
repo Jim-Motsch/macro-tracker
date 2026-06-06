@@ -2,6 +2,7 @@ import { UserButton } from '@clerk/nextjs'
 //Sign out button component from Clerk
 import { currentUser } from '@clerk/nextjs/server'
 //Clerk function that gets the currently signed in user's data
+import FoodSearch from '@/components/FoodSearch'
 export default async function Dashboard() {
 //async because we're fetching the current user from clerk's server
   const user = await currentUser()
@@ -13,6 +14,7 @@ export default async function Dashboard() {
         <UserButton />
       </div>
       <p>Welcome, {user?.firstName}!</p>
+      <FoodSearch />
     </div>
   )
 }
