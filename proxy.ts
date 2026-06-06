@@ -2,8 +2,11 @@
 
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 //Defines what routes are public
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)'])
-
+const isPublicRoute = createRouteMatcher([
+  '/sign-in(.*)', 
+  '/sign-up(.*)',
+  '/api/webhooks(.*)'
+])
 export default clerkMiddleware(async (auth, request) => {
 //This says - sign in and sign up pages are public, everyone can see them
 //protect is from clerkMiddleWare library
