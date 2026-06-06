@@ -27,6 +27,26 @@ export default function FoodSearch() {
   function getNutrient(food: Food, id: number) {
     return food.foodNutrients.find(n => n.nutrientId === id)?.value ?? 0
   }
+  async function logMeal(food: Food) {
+    console.log('logging meal...')
+  const res = await fetch('/api/meals', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      fdcId: food.fdcId,
+      name: food.description,
+      calories: getNutrient(food, 1008),
+      protein: getNutrient(food, 1003),
+      carbs: getNutrient(food, 1005),
+      fat: getNutrient(food, 1004),
+      quantity: 1
+    })
+  })
+  console.log('response status', res.status)
+  if (res.ok) {
+    alert('Meal logged!')
+  }
+}
 //Example: chicken, anything with chicken in the name gets put into an array and
 //mapped out then displayed for the user to see
   return (
@@ -57,6 +77,12 @@ export default function FoodSearch() {
               Carbs: {getNutrient(food, 1005)}g |
               Fat: {getNutrient(food, 1004)}g
             </p>
+            <button
+                className="mt-2 bg-green-500 text-white px-3 py-1 rounded text-sm"
+                onClick={() => logMeal(food)}
+            >
+              Log this food
+            </button>
           </li>
         ))}
       </ul>
