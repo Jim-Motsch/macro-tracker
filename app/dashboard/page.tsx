@@ -3,6 +3,7 @@ import { UserButton } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
 //Clerk function that gets the currently signed in user's data
 import FoodSearch from '@/components/FoodSearch'
+import MealLog from '@/components/MealLog'
 export default async function Dashboard() {
 //async because we're fetching the current user from clerk's server
   const user = await currentUser()
@@ -14,7 +15,10 @@ export default async function Dashboard() {
         <UserButton />
       </div>
       <p>Welcome, {user?.firstName}!</p>
-      <FoodSearch />
+      <div className="grid grid-cols-2 gap-8">
+        <FoodSearch />
+        <MealLog />
+      </div>
     </div>
   )
 }
