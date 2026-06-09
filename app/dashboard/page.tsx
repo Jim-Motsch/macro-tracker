@@ -7,6 +7,7 @@ import { currentUser } from '@clerk/nextjs/server'
 import FoodSearch from '@/components/FoodSearch'
 import MealLog from '@/components/MealLog'
 import MacroGoals from '@/components/MacroGoals'
+import TargetSolver from '@/components/TargetSolver'
 export default function Dashboard() {
   const [refreshKey, setRefreshKey] = useState(0)
 
@@ -24,6 +25,7 @@ export default function Dashboard() {
         <div>
           <MacroGoals />
           <FoodSearch onMealLogged={handleMealLogged} />
+          <TargetSolver />
         </div>
         <MealLog refreshKey={refreshKey} />
       </div>
