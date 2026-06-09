@@ -10,10 +10,11 @@ type Food = {
 }
 /*Defines the shape of a food object from the USDA API. This is ts telling the 
 component what data to expect */
-export default function FoodSearch() {
+export default function FoodSearch({ onMealLogged }: { onMealLogged: () => void }) {
   const [query, setQuery] = useState('') //What's in the search box
   const [results, setResults] = useState<Food[]>([]) //list of foods returned
   const [loading, setLoading] = useState(false)//Shows searching on button
+  
 
   async function handleSearch() {
     if (!query) return //do nothing if search is empty
@@ -45,6 +46,7 @@ export default function FoodSearch() {
   console.log('response status', res.status)
   if (res.ok) {
     alert('Meal logged!')
+    onMealLogged()
   }
 }
 //Example: chicken, anything with chicken in the name gets put into an array and
